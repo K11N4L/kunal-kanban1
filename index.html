@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="main.css">
+  <script src="js/kanban.js" type="module" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="kanban"></div>
+  <div class="controls">
+    <button id="clear-tasks">Clear Tasks</button>
+    <button id="add-column">Add Column</button>
+    <button id="export-pdf">Export to PDF</button>
+  </div>
+  <script type="module">
+    import Kanban from './js/kanban.js';
+    import { clearTasks, addNewColumn, exportToPDF } from './js/kanban_utils.js';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const kanbanRoot = document.querySelector(".kanban");
+      new Kanban(kanbanRoot);
+      
+      // Attach event listeners for new functions
+      document.getElementById('clear-tasks').addEventListener('click', clearTasks);
+      document.getElementById('add-column').addEventListener('click', () => {
+        const columnTitle = prompt('Enter column title:');
+        if (columnTitle) addNewColumn(columnTitle);
+      });
+      document.getElementById('export-pdf').addEventListener('click', exportToPDF);
+    });
+  </script>
+</body>
+</html>
